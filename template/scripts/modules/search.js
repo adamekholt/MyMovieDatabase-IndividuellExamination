@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let searchForm = document.getElementById("searchForm");
     let searchInput = document.getElementById("searchInput");
     let resultsContainer = document.getElementById("cardContainer");
-    let API_KEY = "d1248a00";
+    let apiKey = "d1248a00";
     let query = new URLSearchParams(window.location.search).get("query");
 
         if (searchForm && searchInput) {
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     
         if (query && resultsContainer) {
-        fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${encodeURIComponent(query)}`)
+        fetch(`http://www.omdbapi.com/?apikey=${apiKey}&s=${encodeURIComponent(query)}`)
             .then(response => response.json())
             .then(data => {
                 resultsContainer.innerHTML = ""; 
