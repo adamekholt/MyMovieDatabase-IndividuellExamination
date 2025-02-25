@@ -21,7 +21,7 @@ function displayRandomTrailers() {
         renderTrailers(movie, index + 1);
     });
 }
-//viser toplisten
+//viser topplisten
 function displayTopMovies() {
     if (!oData.topMovieList || oData.topMovieList.length === 0) {
     return;
@@ -55,6 +55,5 @@ function displayTopMovies() {
         container.appendChild(movieCard);
     });
 }
-
 
 window.onload = movies;
