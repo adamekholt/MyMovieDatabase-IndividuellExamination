@@ -1,56 +1,46 @@
+import { searchData } from './api.js';
+
 document.addEventListener("DOMContentLoaded", () => {
-    let searchForm = document.getElementById("searchForm");
-    let searchInput = document.getElementById("searchInput");
-    let resultsContainer = document.getElementById("cardContainer");
-    let apiKey = "d1248a00";
-    let query = new URLSearchParams(window.location.search).get("query");
+    const searchInput = document.getElementById("searchInput");
+    const resultsContainer = document.getElementById("cardContainer");
+    const searchQuery = new URLSearchParams(window.location.search).get("query");
 
-        if (searchForm && searchInput) {
-        searchForm.addEventListener("submit", (event) => {
-            event.preventDefault();
-            let query = searchInput.value.trim();
-            if (query) window.location.href = `search.html?query=${encodeURIComponent(query)}*`;
-        });
-        }
+    document.getElementById("searchForm")?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const query = searchInput.value.trim();
+        if (query) window.location.href = `search.html?query=${encodeURIComponent(query)}`;
+    });
 
-    
-        if (query && resultsContainer) {
-        fetch(`http://www.omdbapi.com/?apikey=${apiKey}&s=${encodeURIComponent(query)}`)
-            .then(response => response.json())
-            .then(data => {
-                resultsContainer.innerHTML = ""; 
-        if (data.Response === "True") {
-            data.Search.forEach(movie => {
-            let movieCard = document.createElement("article");
-            movieCard.classList.add("movie-card");
+    if (searchQuery && resultsContainer) {
+        searchData(searchQuery)
+            .then((data) => {
+                resultsContainer.innerHTML = "";
+                if (data.Response === "True") {
+                    for (let movie of data.Search) {
+                        let movieCard = document.createElement("article");
+                        movieCard.classList.add("movie-card");
 
-            let movieImg = document.createElement("img");
-            movieImg.src = movie.Poster !== "N/A" ? movie.Poster : "./res/no-image.png";
-            movieImg.alt = movie.Title;
+                        let movieLink = document.createElement("a");
+                        movieLink.href = `movie.html?id=${movie.imdbID}`;
 
-            let movieTitle = document.createElement("h3");
-            movieTitle.textContent = `${movie.Title} (${movie.Year})`;
+                        let movieImg = document.createElement("img");
+                        movieImg.src = movie.Poster !== "N/A" ? movie.Poster : './res/no-image.png';
+                        movieImg.alt = movie.Title;
 
-            let movieLink = document.createElement("a");
-            movieLink.href = `movie.html?id=${movie.imdbID}`;
-            movieLink.appendChild(movieImg);
-            movieLink.appendChild(movieTitle);
+                        let movieTitle = document.createElement("h3");
+                        movieTitle.textContent = `${movie.Title} (${movie.Year})`;
 
-            movieCard.appendChild(movieLink);
-            resultsContainer.appendChild(movieCard);
-            });
-            } else {
-                let noResults = document.createElement("p");
-                noResults.textContent = "Could not find any search results.";
-                resultsContainer.appendChild(noResults);
-            }
+                        movieLink.appendChild(movieImg);
+                        movieLink.appendChild(movieTitle);
+                        movieCard.appendChild(movieLink);
+                        resultsContainer.appendChild(movieCard);
+                    }
+                } else {
+                    resultsContainer.innerHTML = "<p>Vi kunne ikke finne noen filmer som passer søket ditt.</p>";
+                }
             })
             .catch(() => {
-                resultsContainer.innerHTML = "";
-                let errorMessage = document.createElement("p");
-                errorMessage.textContent = "Could not find any search results.";
-                resultsContainer.appendChild(errorMessage);
+                resultsContainer.innerHTML = "<p>Beklager, vi kunne ikke hente filmene. Vennligst prøv igjen senere.</p>";
             });
-            }
+    }
 });
-
