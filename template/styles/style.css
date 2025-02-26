@@ -82,6 +82,12 @@ body {
     border: none;
     cursor: pointer;
 }
+
+h2 {
+    color: var(--text-yellow);
+    padding: 20px;
+}
+
 .card-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -112,21 +118,13 @@ body {
     font-family: "Font Awesome 5 Free"; 
     font-weight: 400; 
     position: absolute;
-    top: 10px; 
-    right: 10px; 
-    font-size: 2rem;  
-    color: var(--text-yellow);  
+    top: 10px;
+    right: 10px;
+    font-size: 2rem;
+    color: var(--text-yellow);
     z-index: 1;
 } 
 
-/* .movie-card::before { 
-    content: "\f005"; 
-    font-family: "Font Awesome 5 Free"; 
+.movie-card.favorited::before {
     font-weight: 900; 
-    position: absolute;
-    top: 10px; 
-    right: 10px;
-    font-size: 2rem;  
-    color: var(--text-yellow);  
-    z-index: 1;  
-  } */ /*ved klikk skal den bli til denne/*
+}
