@@ -1,13 +1,12 @@
-function updateFavorites(movieTitle, card) {
-    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-    const movieIndex = favorites.findIndex(movie => movie.Title === movieTitle);
+import { addToFavorites } from './favorites.js'; 
 
+function updateFavorites(movieTitle, card) {
     const moviePoster = card.querySelector('img')?.src || '';
     const movieYear = card.querySelector('p')?.textContent || '';
 
-    if (!movieTitle || !moviePoster || !movieYear) {
-        console.error('Missing movie data!');
-        return; 
+    if (!movieTitle) {
+        console.log("Movie title is missing!");
+        return;
     }
 
     const movieData = {
@@ -16,14 +15,7 @@ function updateFavorites(movieTitle, card) {
         Year: movieYear
     };
 
-    if (movieIndex !== -1) {
-        favorites.splice(movieIndex, 1);
-    } else {
-        favorites.push(movieData);
-    }
-
-
-    localStorage.setItem('favorites', JSON.stringify(favorites));
+    addToFavorites(movieData);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -39,8 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const movieTitle = card.querySelector('h3')?.textContent.trim();
         if (!movieTitle) return;
 
-        card.classList.toggle('favorited');
-        updateFavorites(movieTitle, card);
+        card.classList.toggle('favorited');  // Toggles the 'favorited' class
+        updateFavorites(movieTitle, card);  // Oppdater favorittene
 
         const movieID = card.dataset.imdbId; 
         if (movieID) {
