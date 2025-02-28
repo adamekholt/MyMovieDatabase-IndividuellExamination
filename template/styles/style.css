@@ -128,28 +128,3 @@ h2 {
 .movie-card.favorited::before {
     font-weight: 900; 
 }
-
-/* Style for movie container */
-.movie-container {
-    width: 60%;
-    margin: 0 auto;
-    text-align: center;
-    font-family: Arial, sans-serif;
-}
-
-#movie-title {
-    font-size: 2em;
-    margin-bottom: 10px;
-}
-
-#movie-poster {
-    width: 300px;
-    height: auto;
-    margin-bottom: 10px;
-}
-
-#movie-year, #movie-runtime, #movie-description {
-    font-size: 1.2em;
-    margin-bottom: 5px;
-}
-
