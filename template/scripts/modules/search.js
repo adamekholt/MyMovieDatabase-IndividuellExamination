@@ -11,21 +11,20 @@ document.addEventListener("DOMContentLoaded", () => {
         if (query) window.location.href = `search.html?query=${encodeURIComponent(query)}`;
     });
 
-    if (searchQuery && resultsContainer) {
-        searchMovies(searchQuery)
-            .then((movies) => {
-                resultsContainer.innerHTML = movies.length
-                    ? movies.map(movie => `
-                        <article class="movie-card">
-                            <a href="movie.html?id=${movie.imdbID}">
-                                <img src="${movie.Poster !== "N/A" ? movie.Poster : './res/no-image.png'}" alt="${movie.Title}">
-                                <h3>${movie.Title} (${movie.Year})</h3>
-                            </a>
-                        </article>`).join('')
-                    : "<p>Ingen filmer funnet.</p>";
-            })
-            .catch(() => {
-                resultsContainer.innerHTML = "<p>Beklager, vi kunne ikke hente filmene. Prøv igjen senere.</p>";
-            });
-    }
+    if (!searchQuery || !resultsContainer) return;
+
+    searchMovies(searchQuery)
+        .then(movies => {
+            resultsContainer.innerHTML = movies.length ? movies.map(movie => `
+                <article class="movie-card">
+                    <a href="movie.html?id=${movie.imdbID}">
+                        <img src="${movie.Poster !== "N/A" ? movie.Poster : './res/no-image.png'}" alt="${movie.Title}">
+                        <h3>${movie.Title} (${movie.Year})</h3>
+                    </a>
+                </article>`).join('') 
+                : "<p>Ingen filmer funnet.</p>";
+        })
+        .catch(() => {
+            resultsContainer.innerHTML = "<p>Beklager, vi kunne ikke hente filmene. Prøv igjen senere.</p>";
+        });
 });
