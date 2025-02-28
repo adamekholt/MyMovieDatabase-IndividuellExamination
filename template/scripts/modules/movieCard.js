@@ -9,13 +9,11 @@ function updateFavorites(movieTitle, card) {
         return;
     }
 
-    const movieData = {
+    addToFavorites({
         Title: movieTitle,
         Poster: moviePoster,
         Year: movieYear
-    };
-
-    addToFavorites(movieData);
+    });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -31,8 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const movieTitle = card.querySelector('h3')?.textContent.trim();
         if (!movieTitle) return;
 
-        card.classList.toggle('favorited');  // Toggles the 'favorited' class
-        updateFavorites(movieTitle, card);  // Oppdater favorittene
+        card.classList.toggle('favorited');
+        updateFavorites(movieTitle, card);
 
         const movieID = card.dataset.imdbId; 
         if (movieID) {

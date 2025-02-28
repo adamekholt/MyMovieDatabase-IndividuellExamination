@@ -9,63 +9,35 @@ export function addToFavorites(movieData) {
     }
 
     localStorage.setItem('favorites', JSON.stringify(favorites));
-
-    if (document.getElementById('favorites-list')) {
-        updateFavoritesList();
-    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const favoritesContainer = document.getElementById('favorites-list');
+    if (window.location.pathname !== '/favorites.html') {
+        const favoritesContainer = document.querySelector('#cardContainer');
+        const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-    if (!favoritesContainer) {
-        console.log("Not on favorites page. Skipping UI update.");
-        return;  
+        if (favoritesContainer && favorites.length > 0) {
+            updateFavoritesList(favorites, favoritesContainer);
+        }
     }
-
-    updateFavoritesList();
 });
 
-
-function updateFavoritesList(favorites) {
-    const favoritesContainer = document.querySelector('#favorites-list');
-    
-    // Tøm eksisterende innhold før oppdatering
-    favoritesContainer.innerHTML = '';
+function updateFavoritesList(favorites, container) {
+    container.innerHTML = '';
 
     favorites.forEach(favorite => {
-        // Hvis år er tomt, sett til 'Unknown'
-        const movieYear = favorite.Year || 'Unknown';
+        const movieCard = document.createElement('article');
+        movieCard.classList.add('movie-card');
 
-        const movieItem = document.createElement('div');
-        movieItem.classList.add('favorite-movie');
-        
-        movieItem.innerHTML = `
-            <h3>${favorite.Title}</h3>
-            <img src="${favorite.Poster}" alt="${favorite.Title}">
-            <p>Year: ${movieYear}</p>
-        `;
+        const moviePoster = document.createElement('img');
+        moviePoster.src = favorite.Poster;
+        moviePoster.alt = `${favorite.Title} poster`;
 
-        favoritesContainer.appendChild(movieItem);
+        const movieTitle = document.createElement('h3');
+        movieTitle.textContent = favorite.Title;
+
+        movieCard.appendChild(moviePoster);
+        movieCard.appendChild(movieTitle);
+        container.appendChild(movieCard);
     });
 }
-document.addEventListener('DOMContentLoaded', () => {
-    const favoritesContainer = document.querySelector('#favorites-list');
-
-    if (!favoritesContainer) {
-        console.error("Favorites container not found!");
-        return;
-    }
-
-    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-
-    console.log("Favorites data from localStorage:", favorites);
-
-    if (favorites.length === 0) {
-        favoritesContainer.innerHTML = '<p>No favorites added yet.</p>';
-        return;
-    }
-
-    updateFavoritesList(favorites);
-});
-
