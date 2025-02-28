@@ -2,15 +2,24 @@ import { renderTrailers } from './caroussel.js';
 import { fetchTopMovies, oData } from './api.js';
 
 async function movies() {
-    await fetchTopMovies(); 
-    displayRandomTrailers();
-    displayTopMovies(); 
+    // Sjekk at vi er på startsiden før vi prøver å vise trailers og filmkort
+    if (document.body.classList.contains('startpage')) {
+        await fetchTopMovies(); 
+        displayRandomTrailers();
+        displayTopMovies();
+    }
 }
 
-//viser trailere
 function displayRandomTrailers() {
+    // Sjekk at vi er på startsiden og containeren for trailere eksisterer
+    const trailerContainer = document.querySelector('.trailers__container');
+    if (!trailerContainer) {
+        console.error("Containeren for trailere finnes ikke.");
+        return;
+    }
+
     if (!oData.topMovieList || oData.topMovieList.length === 0) {
-        console.error("");
+        console.error("No top movies available.");
         return;
     }
 
@@ -21,39 +30,40 @@ function displayRandomTrailers() {
         renderTrailers(movie, index + 1);
     });
 }
-//viser topplisten
-function displayTopMovies() {
-    if (!oData.topMovieList || oData.topMovieList.length === 0) {
-    return;
-    }
 
+function displayTopMovies() {
+    // Sjekk at vi er på startsiden før vi prøver å vise movie cards
     const container = document.getElementById('cardContainer');
     if (!container) {
+        console.error('Containeren for movie cards finnes ikke.');
+        return;
+    }
+
+    if (!oData.topMovieList || oData.topMovieList.length === 0) {
+        console.error("No top movies available.");
         return;
     }
 
     oData.topMovieList.slice(0, 20).forEach(movie => {
-        const movieCard = document.createElement('div');
-        movieCard.classList.add('movie-card');  // Legger til en klasse for CSS-styling
+        const movieCard = document.createElement('article');
+        movieCard.classList.add('movie-card');
+
+        const movieLink = document.createElement('a');
+        movieLink.href = `movie.html?id=${movie.imdbID}`;
 
         const moviePoster = document.createElement('img');
         moviePoster.src = movie.Poster;
         moviePoster.alt = `${movie.Title} poster`;
-        
+
         const movieTitle = document.createElement('h3');
         movieTitle.textContent = movie.Title;
-        
-        const movieYear = document.createElement('p');
-        movieYear.textContent = movie.Year;
 
-        const movieRating = document.createElement('p');
-        movieRating.textContent = `IMDB Rating: ${movie.Rating}`;
-
-        movieCard.appendChild(moviePoster);
-        movieCard.appendChild(movieTitle);
-
+        movieLink.appendChild(moviePoster);
+        movieLink.appendChild(movieTitle);
+        movieCard.appendChild(movieLink);
         container.appendChild(movieCard);
     });
 }
 
+// Kall funksjonen ved onload
 window.onload = movies;
