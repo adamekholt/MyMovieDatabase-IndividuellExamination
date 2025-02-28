@@ -13,7 +13,7 @@ export async function fetchTopMovies() {
 
 export async function searchMovies(searchString) {
     try {
-        const response = await fetch(`http://www.omdbapi.com/?apikey=d1248a00&s=${encodeURIComponent(searchString)}`);
+        const response = await fetch(`http://www.omdbapi.com/?apikey=d1248a00&s=${encodeURIComponent(searchString)}*`);
         if (!response.ok) throw new Error(`HTTP-feil: ${response.status}`);
 
         const data = await response.json();
@@ -28,7 +28,7 @@ export async function searchMovies(searchString) {
 
 export async function fetchMovieData(imdbID) {
     try {
-        const response = await fetch(`http://www.omdbapi.com/?apikey=d1248a00&i=${encodeURIComponent(imdbID)}&plot=full`);
+        const response = await fetch(`http://www.omdbapi.com/?apikey=d1248a00&i=${encodeURIComponent(imdbID)}&plot=full*`);
         if (!response.ok) throw new Error(`HTTP-feil: ${response.status}`);
 
         const data = await response.json();
