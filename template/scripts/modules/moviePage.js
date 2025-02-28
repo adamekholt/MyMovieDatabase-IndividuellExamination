@@ -1,27 +1,22 @@
-import { searchData } from "./api.js";
+import { fetchMovieData } from './api.js';
 
-document.addEventListener("DOMContentLoaded", function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const movieID = urlParams.get("id");
+document.addEventListener("DOMContentLoaded", () => {
+    const movieID = new URLSearchParams(window.location.search).get("id");
 
     if (movieID) {
-        searchData(movieID)
-            .then(displayMovieDetails)
+        fetchMovieData(movieID)
+            .then(movie => {
+                if (movie?.Response === "False") {
+                    document.getElementById("movie-title").textContent = "Fant ikke filmen.";
+                } else {
+                    document.getElementById("movie-title").textContent = movie.Title;
+                    document.getElementById("movie-poster").src = movie.Poster;
+                    document.getElementById("movie-poster").alt = movie.Title;
+                    document.getElementById("movie-description").textContent = movie.Plot;
+                    document.getElementById("movie-year").textContent = `Utgivelsesår: ${movie.Year}`;
+                    document.getElementById("movie-runtime").textContent = `Varighet: ${movie.Runtime}`;
+                }
+            })
             .catch(error => console.error("Feil ved henting av filmdata:", error));
     }
 });
-
-function displayMovieDetails(movie) {
-    if (!movie || movie.Response === "False") {
-        document.searchData("movieDetails").innerHTML = "<p>Fant ikke filmen.</p>";
-        return;
-    }
-
-    document.searchData("movieTitle").textContent = movie.Title;
-    document.searchData("moviePoster").src = movie.Poster;
-    document.searchData("moviePoster").alt = movie.Title;
-    document.searchData("moviePlot").textContent = movie.Plot;
-    document.searchData("movieYear").textContent = `Utgivelsesår: ${movie.Year}`;
-    document.searchData("movieGenre").textContent = `Sjanger: ${movie.Genre}`;
-    document.searchData("movieRating").textContent = `IMDb-rating: ${movie.imdbRating}`;
-}

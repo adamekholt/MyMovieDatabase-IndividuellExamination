@@ -1,4 +1,4 @@
-import { searchData } from './api.js';
+import { searchMovies } from './api.js';
 
 document.addEventListener("DOMContentLoaded", () => {
     const searchInput = document.getElementById("searchInput");
@@ -12,35 +12,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     if (searchQuery && resultsContainer) {
-        searchData(searchQuery)
-            .then((data) => {
-                resultsContainer.innerHTML = "";
-                if (data.Response === "True") {
-                    for (let movie of data.Search) {
-                        let movieCard = document.createElement("article");
-                        movieCard.classList.add("movie-card");
-
-                        let movieLink = document.createElement("a");
-                        movieLink.href = `movie.html?id=${movie.imdbID}`;
-
-                        let movieImg = document.createElement("img");
-                        movieImg.src = movie.Poster !== "N/A" ? movie.Poster : './res/no-image.png';
-                        movieImg.alt = movie.Title;
-
-                        let movieTitle = document.createElement("h3");
-                        movieTitle.textContent = `${movie.Title} (${movie.Year})`;
-
-                        movieLink.appendChild(movieImg);
-                        movieLink.appendChild(movieTitle);
-                        movieCard.appendChild(movieLink);
-                        resultsContainer.appendChild(movieCard);
-                    }
-                } else {
-                    resultsContainer.innerHTML = "<p>Vi kunne ikke finne noen filmer som passer søket ditt.</p>";
-                }
+        searchMovies(searchQuery)
+            .then((movies) => {
+                resultsContainer.innerHTML = movies.length
+                    ? movies.map(movie => `
+                        <article class="movie-card">
+                            <a href="movie.html?id=${movie.imdbID}">
+                                <img src="${movie.Poster !== "N/A" ? movie.Poster : './res/no-image.png'}" alt="${movie.Title}">
+                                <h3>${movie.Title} (${movie.Year})</h3>
+                            </a>
+                        </article>`).join('')
+                    : "<p>Ingen filmer funnet.</p>";
             })
             .catch(() => {
-                resultsContainer.innerHTML = "<p>Beklager, vi kunne ikke hente filmene. Vennligst prøv igjen senere.</p>";
+                resultsContainer.innerHTML = "<p>Beklager, vi kunne ikke hente filmene. Prøv igjen senere.</p>";
             });
     }
 });
