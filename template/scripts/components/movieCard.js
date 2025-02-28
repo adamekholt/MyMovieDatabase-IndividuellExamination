@@ -7,7 +7,7 @@ function updateFavorites(movieTitle, card) {
 
     if (!movieTitle || !moviePoster || !movieYear) {
         console.error('Missing movie data!');
-        return;
+        return; 
     }
 
     const movieData = {
@@ -21,6 +21,7 @@ function updateFavorites(movieTitle, card) {
     } else {
         favorites.push(movieData);
     }
+
 
     localStorage.setItem('favorites', JSON.stringify(favorites));
 }
@@ -40,6 +41,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         card.classList.toggle('favorited');
         updateFavorites(movieTitle, card);
+
+        const movieID = card.dataset.imdbId; 
+        if (movieID) {
+            window.location.href = `movie.html?id=${movieID}`; 
+        }
     });
 
     setTimeout(() => {
