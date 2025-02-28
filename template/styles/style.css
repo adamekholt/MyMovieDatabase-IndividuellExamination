@@ -128,3 +128,71 @@ h2 {
 .movie-card.favorited::before {
     font-weight: 900; 
 }
+
+/* Movie Detail Section */
+.movie-detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 20px 50px;
+    min-height: 100vh;
+}
+
+.movie-detail-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: var(--primary-grey);
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.movie-poster-wrapper {
+    position: relative;
+    width: 40%;
+}
+
+.movie-poster {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.favorite-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2rem;
+    color: var(--text-yellow);
+    cursor: pointer;
+}
+
+.movie-info {
+    width: 55%;
+    padding-left: 2rem;
+}
+
+.movie-title {
+    font-size: 1.5rem;
+    color: var(--text-yellow);
+    margin-bottom: 0.5rem;
+    position: relative;
+    top: -20px;
+}
+
+.movie-year,
+.movie-runtime {
+    font-size: 1.2rem;
+    color: #ddd;
+}
+
+.movie-description {
+    font-size: 1.1rem;
+    color: #bbb;
+    margin-top: 15px;
+}
+
