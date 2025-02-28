@@ -5,25 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Movie</title>
     <link rel="stylesheet" href="./styles/style.css" />
-    <script
-      src="https://kit.fontawesome.com/f300007e95.js"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://kit.fontawesome.com/f300007e95.js" crossorigin="anonymous"></script>
     <script type="module" src="./scripts/script.js"></script>
+    <script type="module" src="./scripts/modules/startpagedata.js"></script>
+    <script type="module" src="./scripts/modules/search.js"></script>
+    <script type="module" src="./scripts/modules/api.js"></script>
+    <script type="module" src="./scripts/modules/movieCard.js"></script>
+    <script type="module" src="./scripts/modules/moviePage.js"></script>
   </head>
   <body>
-    <header>
-      <header class="header">
-        <div class="content-wrapper header__flex">
-          <a href="index.html"><img class="header__logo" src="./res/logo.png" alt="logotype"/></a>
-        </div>
-      </header>
+    <header class="header">
+      <div class="header__flex">
+        <a href="index.html" class="header__logo-link">
+          <img class="header__logo" src="./res/logo.png" alt="logotype" />
+        </a>
+        <form class="header__form" id="searchForm">
+          <input
+            class="header__input"
+            id="searchInput"
+            type="text"
+            placeholder="Search movies..."
+            aria-label="Search"
+          />
+          <button class="header__form-btn" id="searchBtn">Search</button>
+        </form>
+        <a href="./favorites.html" class="header__fav-btn">Favorites</a>
+      </div>
+    </header>
 
-    <!-- Movie Detailed Informatin -->
-    <section>
-      <div class="content-wrapper">
-        <section class="movie-information" id="movieInformation"></section>
+    <!-- Movie Detailed Information Section -->
+    <section class="movie-detail">
+      <div class="movie-detail-container">
+        <div class="movie-poster-wrapper">
+          <img id="movie-poster" alt="Movie Poster" class="movie-poster" />
+        </div>
+        <div class="movie-info">
+          <h1 id="movie-title" class="movie-title">Loading...</h1>
+          <p id="movie-year" class="movie-year"></p>
+          <p id="movie-runtime" class="movie-runtime"></p>
+          <p id="movie-description" class="movie-description"></p>
+        </div>
       </div>
     </section>
+
   </body>
 </html>

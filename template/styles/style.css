@@ -82,3 +82,122 @@ body {
     border: none;
     cursor: pointer;
 }
+
+h2 {
+    color: var(--text-yellow);
+    padding: 20px;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.movie-card {
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    background: var(--primary-grey);
+}
+
+.movie-card h3 {
+    font-size: 1rem;
+    color: var(--primary-white);
+    margin: 10px 0;
+}
+
+.movie-card img {
+    width: 100%;
+    border-bottom: 1px solid var(--text-yellow);
+}
+
+.movie-card::before {
+    content: "\f005"; 
+    font-family: "Font Awesome 5 Free"; 
+    font-weight: 400; 
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2rem;
+    color: var(--text-yellow);
+    z-index: 1;
+} 
+
+.movie-card.favorited::before {
+    font-weight: 900;
+    color: var(--text-yellow);  
+}
+
+.movie-detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 20px 50px;
+    min-height: 100vh;
+    margin-top: -80px; 
+}
+
+.movie-detail-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem; 
+    background-color: var(--header-grey);   
+}
+
+.movie-poster-wrapper {
+    position: relative;
+    width: 40%;
+}
+
+.movie-poster {
+    width: 100%;
+    height: auto;
+    background-color: var(--header-grey);
+}
+
+.favorite-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2rem;
+    color: var(--text-yellow);
+    cursor: pointer;
+}
+
+.movie-info {
+    width: 60%;
+    padding-left: 2rem;
+}
+
+.movie-title {
+    font-size: 1.5rem;
+    color: var(--text-yellow);
+    margin-bottom: 0.5rem;
+    position: relative;
+    top: -20px;
+}
+
+.movie-year,
+.movie-runtime {
+    font-size: 1.2rem;
+    color: var(--primary-white);
+}
+
+.movie-description {
+    font-size: 1.1rem;
+    color: var(--primary-white);
+    margin-top: 15px;
+}
+
+a {
+    text-decoration: none; 
+}
+
+a:hover {
+    text-decoration: underline; 
+}
